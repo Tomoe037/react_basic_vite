@@ -10,4 +10,4 @@ const ThirdComponent = () => {
     );
 }
 
-export { SecondComponent, ThirdComponent}
+export { SecondComponent, ThirdComponent};
