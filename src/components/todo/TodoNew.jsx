@@ -1,11 +1,13 @@
-
+import { useState } from 'react'
 const TodoNew = (props) => {
     const {addNewTodo} = props;
+    const [valueInput, setValueInput] = useState("tomoe");
+  
     const handleClick = () => {
-        alert("click me")
+        console.log("valueInput: ", valueInput)
       }
     const handleOnChange = (name) => {
-        console.log("handle on change " ,name);
+        setValueInput(name)
     }  
     return (
         <>
@@ -16,6 +18,7 @@ const TodoNew = (props) => {
             <button className="btnAdd"
             onClick={handleClick}
             >Add</button>
+            <div>my data is  {valueInput}</div>
         </div>
     </>
     )
