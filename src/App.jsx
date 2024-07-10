@@ -14,8 +14,8 @@ const App = () => {
   // }
  
   const [todoList, setTodoList] = useState([
-    {id: "1",name: "do it"},
-    {id: "2",name: "watching tv"},
+    // {id: "1",name: "do it"},
+    // {id: "2",name: "watching tv"},
   ])
 
   const randomIntFromInterval= (min, max) => { // min and max included 
