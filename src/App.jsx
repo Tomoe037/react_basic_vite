@@ -25,7 +25,12 @@ const App = () => {
     const newTodo = { id: randomIntFromInterval(1, 1000000), name: name };
     setTodoList([...todoList, newTodo]);
   }
+  const deleteTodo = (id) => {
+    const newTodo = todoList.filter((item) => {return (item.id !== id)});
+    setTodoList(newTodo);
+    console.log(newTodo);
 
+  }
   return (
     <>
       <div className="todo-container">
@@ -43,6 +48,7 @@ const App = () => {
           :
           <TodoData
             todoList={todoList}
+            deleteTodo= {deleteTodo}
           />}
 
       </div>
