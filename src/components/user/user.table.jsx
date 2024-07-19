@@ -1,5 +1,5 @@
 import { Space, Table, Tag } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchUserDataAPI } from '../../services/api.service';
 const UserTable = () => {
     const [dataUsers , setDataUsers] = useState([
@@ -9,6 +9,11 @@ const UserTable = () => {
             email : "tomoe@gmail.com"
         }
     ]);
+    
+    useEffect(() => {
+        console.log("check load 111");
+        loadUser();
+    }, []) ;
 
     const columns = [
         {
@@ -28,15 +33,15 @@ const UserTable = () => {
     ];
 
     const loadUser = async () => {
-        console.log("check load start ");
-        const res = await fetchUserDataAPI();
-        console.log("check load end ", res.data);
         
+        const res = await fetchUserDataAPI();
+        setDataUsers(res.data);
+        console.log("2")  ;
     }
-    loadUser();
+    console.log("check load 000");
     
     return (
-        <Table columns={columns} dataSource={dataUsers} />
+        <Table columns={columns} dataSource={dataUsers} rowKey={"_id"}/>
     );
 }
 export default UserTable;
