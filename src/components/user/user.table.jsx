@@ -2,13 +2,7 @@ import { Space, Table, Tag } from 'antd';
 import { useEffect, useState } from 'react';
 import { fetchUserDataAPI } from '../../services/api.service';
 const UserTable = () => {
-    const [dataUsers , setDataUsers] = useState([
-        {
-            _id : "10",
-            fullName : "tomoe",
-            email : "tomoe@gmail.com"
-        }
-    ]);
+    const [dataUsers , setDataUsers] = useState([]);
     
     useEffect(() => {
         console.log("check load 111");

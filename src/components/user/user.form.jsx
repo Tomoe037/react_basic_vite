@@ -1,4 +1,4 @@
-import { Button, Input, notification } from 'antd';
+import { Button, Flex, Input, notification, Modal} from 'antd';
 import { useState } from 'react';
 import { createUserAPI } from '../../services/api.service';
 
@@ -9,25 +9,38 @@ const UserForm = () => {
     // console.log("check email: " , email);
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleClickBtn = async () => {
+    const handleSubmitBtn = async () => {
         const res = await createUserAPI(fullName, email, password, phone);
         if (res.data) {
             notification.success({
                 message: 'Create User',
                 description: 'create user success'
             })
+            setIsModalOpen(false);
         } else {
             notification.error({
                 message: 'Error create user',
                 description: JSON.stringify(res.message)
             })
         }
+        
     }
 
     return (
         <div className='user-form' style={{ margin: "20px 0" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+            
+            <Modal
+                title="Create User"
+                open={isModalOpen}
+                onOk={()=>{handleSubmitBtn()}}
+                onCancel={() => {setIsModalOpen(false)}}
+                maskClosable= {false}
+                okText= "Create"
+            >
+                <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                 <div>
                     <span>Full Name</span>
                     <Input
@@ -56,12 +69,15 @@ const UserForm = () => {
                         onChange={(event) => { setPhone(event.target.value) }}
                     />
                 </div>
-                <div>
+                
+            </div>
+            </Modal>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <h3>Table User</h3>
                     <Button
-                        onClick={handleClickBtn}
+                        onClick={()=>{setIsModalOpen(true)}}
                         type="primary"> create user</Button>
                 </div>
-            </div>
         </div>
     )
 }
