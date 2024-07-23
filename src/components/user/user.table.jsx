@@ -4,7 +4,7 @@ import UpdateUserModal from './update.user.modal';
 import { useState } from 'react';
 
 const UserTable = (props) => {
-    const { dataUsers } = props;
+    const { dataUsers, loadUser } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 
@@ -16,7 +16,7 @@ const UserTable = (props) => {
             render: (_, record) => {
                 return (
                     <>
-                        <a>Invite {record._id}</a>
+                        <a>{record._id}</a>
                     </>
                 )
             }
@@ -65,6 +65,7 @@ const UserTable = (props) => {
                 setIsModalUpdateOpen={setIsModalUpdateOpen}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
+                loadUser ={loadUser}
 
             />
         </>
