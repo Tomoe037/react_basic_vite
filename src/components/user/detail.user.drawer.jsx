@@ -1,5 +1,4 @@
 import { Drawer } from 'antd';
-import { useState, useEffect } from 'react';
 const DetailUserDrawer = (props) => {
 
     const { isOpenDetail, setIsOpenDetail, dataDetail, setDataDetail } = props;
