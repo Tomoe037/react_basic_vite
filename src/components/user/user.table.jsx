@@ -1,8 +1,10 @@
 import { Table } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined,  } from '@ant-design/icons'
+import {Popconfirm , notification} from 'antd'
 import UpdateUserModal from './update.user.modal';
 import { useState } from 'react';
 import DetailUserDrawer from './detail.user.drawer';
+import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) => {
     const { dataUsers, loadUser } = props;
@@ -21,15 +23,15 @@ const UserTable = (props) => {
                 return (
                     <>
                         <a
-                        onClick={()=>{
-                            setDataDetail(record);
-                            setIsOpenDetail(true);
-                        }}
+                            onClick={() => {
+                                setDataDetail(record);
+                                setIsOpenDetail(true);
+                            }}
                         >{record._id}</a>
                     </>
                 )
             }
-            
+
         },
         {
             title: 'Full Name',
@@ -51,7 +53,18 @@ const UserTable = (props) => {
                                 setIsModalUpdateOpen(true);
                             }}
                             style={{ padding: "10px", cursor: "pointer", color: "blue", fontSize: "20px" }} />
-                        <DeleteOutlined style={{ padding: "10px", cursor: "pointer", color: "red", fontSize: "20px" }} />
+                        <Popconfirm
+                            title="Delete user"
+                            description="Are you sure to delete this user?"
+                            onConfirm={()=> {
+                                deleteUser(record._id);
+                            }}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <DeleteOutlined style={{ padding: "10px", cursor: "pointer", color: "red", fontSize: "20px" }} />
+                        </Popconfirm>
+                        
                     </div>
                 );
             }
@@ -59,6 +72,23 @@ const UserTable = (props) => {
         },
 
     ];
+
+    const deleteUser = async(id) => {
+        const res =  await deleteUserAPI(id);
+        if (res.data) {
+            notification.success({
+                message: 'Delete User',
+                description: 'Delete user success'
+            })
+            await loadUser();
+
+        } else {
+            notification.error({
+                message: 'Error delete user',
+                description: JSON.stringify(res.message)
+            })
+        }
+    }
 
 
     console.log("check load 000");
@@ -75,14 +105,14 @@ const UserTable = (props) => {
                 setIsModalUpdateOpen={setIsModalUpdateOpen}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
-                loadUser ={loadUser}
+                loadUser={loadUser}
 
             />
             <DetailUserDrawer
-            isOpenDetail= {isOpenDetail}
-            setIsOpenDetail= {setIsOpenDetail}
-            dataDetail ={dataDetail}
-            setDataDetail = {setDataDetail}
+                isOpenDetail={isOpenDetail}
+                setIsOpenDetail={setIsOpenDetail}
+                dataDetail={dataDetail}
+                setDataDetail={setDataDetail}
             />
         </>
     );
