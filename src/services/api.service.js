@@ -21,7 +21,7 @@ const updateUserAPI = (_id, fullName, phone) => {
 }
 
 const fetchUserDataAPI = () => {
-    const URL_BACKEND = "/api/v1/user";
+    const URL_BACKEND = "/api/v1/user?current=1&pageSize=1";
 
     return axios.get(URL_BACKEND);
 }
@@ -41,16 +41,16 @@ const handleUploadFile = (file, folder) => {
     }
     const bodyFormData = new FormData();
     bodyFormData.append('fileImg', file);
-    return axios.post(URL_BACKEND, bodyFormData , config);
+    return axios.post(URL_BACKEND, bodyFormData, config);
 }
 
-const updateAvatarUserAPI = ( avatar,_id,fullName, phone) => {
+const updateAvatarUserAPI = (avatar, _id, fullName, phone) => {
     const URL_BACKEND = "/api/v1/user";
     const data = {
         _id: _id,
         fullName: fullName,  // trước dấu 2 chấm là tên key, sau là giá trị từ react
         phone: phone,
-        avatar : avatar,
+        avatar: avatar,
     }
     return axios.put(URL_BACKEND, data);
 }
