@@ -31,6 +31,29 @@ const deleteUserAPI = (id) => {
     return axios.delete(URL_BACKEND);
 }
 
+const handleUploadFile = (file, folder) => {
+    const URL_BACKEND = "/api/v1/file/upload"
+    let config = {
+        headers: {
+            "upload-type": folder,
+            "Content-Type": "multipart/form-data",
+        }
+    }
+    const bodyFormData = new FormData();
+    bodyFormData.append('fileImg', file);
+    return axios.post(URL_BACKEND, bodyFormData , config);
+}
+
+const updateAvatarUserAPI = ( avatar,_id,fullName, phone) => {
+    const URL_BACKEND = "/api/v1/user";
+    const data = {
+        _id: _id,
+        fullName: fullName,  // trước dấu 2 chấm là tên key, sau là giá trị từ react
+        phone: phone,
+        avatar : avatar,
+    }
+    return axios.put(URL_BACKEND, data);
+}
 export {
-    createUserAPI, updateUserAPI, fetchUserDataAPI, deleteUserAPI
+    createUserAPI, updateUserAPI, fetchUserDataAPI, deleteUserAPI, handleUploadFile, updateAvatarUserAPI
 }

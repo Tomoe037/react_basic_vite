@@ -1,8 +1,9 @@
-import { Drawer } from 'antd';
+import { Button, Drawer, notification } from 'antd';
 import { useState } from 'react';
+import { handleUploadFile, updateAvatarUserAPI } from '../../services/api.service';
 const DetailUserDrawer = (props) => {
 
-    const { isOpenDetail, setIsOpenDetail, dataDetail, setDataDetail } = props;
+    const { isOpenDetail, setIsOpenDetail, dataDetail, setDataDetail,loadUser } = props;
     const [selectedFile, setSelectedFile] = useState(null)
     const [preview, setPreview] = useState(null)
 
@@ -19,6 +20,42 @@ const DetailUserDrawer = (props) => {
         }
     }
     console.log("check", preview)
+
+    const handleUpdateUserAvatar = async () => {
+        //step 1: upload file
+        console.log("check file : ", selectedFile);
+        const resUpload = await handleUploadFile(selectedFile, "avatar") // avtar laf key trong be
+        console.log("check resUpload ", resUpload);
+        if (resUpload.data) {
+            const newAvatar = resUpload.data.fileUploaded;
+            // step 2 update user
+            const resUpdateAvatar = await updateAvatarUserAPI(newAvatar, dataDetail._id, dataDetail.fullName, dataDetail.phone);
+            if (resUpdateAvatar.data) {
+                setIsOpenDetail(false);
+                setSelectedFile(null);
+                setPreview(null);
+                await loadUser();
+                notification.success({
+                    message: 'Succes update avatar user',
+                    description: "cập nhật avt thành công"
+                })
+            } else {
+                notification.error({
+                    message: 'Error update avatar user',
+                    description: JSON.stringify(resUpdateAvatar.message)
+                })
+            }
+
+        } else {
+            notification.error({
+                message: 'Error upload avatar user',
+                description: JSON.stringify(resUpload.message)
+            })
+
+        }
+        // step 2 update user
+
+    }
     return (
         <>
             <Drawer
@@ -75,25 +112,31 @@ const DetailUserDrawer = (props) => {
                                 onChange={(event) => (handleOnChangeFile(event))}
                             />
                         </div>
+                        {/* preview image*/}
                         {preview &&
-                            <div
-                                style={{
-                                    width: "150px",
-                                    height: "150px",
-                                    border: "1px solid #ccc",
-                                    margin: "10px 0",
-                                }}
-                            >
-                                <img
-
+                            <>
+                                <div
                                     style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "contain",
+                                        width: "150px",
+                                        height: "150px",
+                                        border: "1px solid #ccc",
+                                        margin: "10px 0",
                                     }}
-                                    src={preview}
-                                ></img>
-                            </div>
+                                >
+                                    <img
+
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "contain",
+                                        }}
+                                        src={preview}
+                                    ></img>
+                                </div>
+                                <Button type='primary'
+                                    onClick={handleUpdateUserAvatar}
+                                >Save</Button>
+                            </>
                         }
 
                     </>
