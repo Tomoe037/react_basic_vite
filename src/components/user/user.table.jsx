@@ -7,7 +7,7 @@ import DetailUserDrawer from './detail.user.drawer';
 import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) => {
-    const { dataUsers, loadUser } = props;
+    const { dataUsers, loadUser, current,pageSize, total, setCurrent, setPageSize } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
     const [isOpenDetail, setIsOpenDetail] = useState(false);
@@ -21,7 +21,7 @@ const UserTable = (props) => {
             render: (_, record , index) => {
                 return (
                     <>
-                        {index + 1}
+                        {(index + 1) + (current- 1)*pageSize}
                     </>
                 )
             }
@@ -100,8 +100,24 @@ const UserTable = (props) => {
         }
     }
 
+    const onChange = (pagination, filters, sorter, extra) => { 
+        // neu thay doi vi tri trang : current
+        if(pagination && pagination.current){
+            if(+pagination.current != +current){ // dau + la de tu chuyen sang kieu du lieu so "5"=>5
+                setCurrent(+pagination.current);
+            } 
 
-    console.log("check load 000");
+        }
+         // neu thay doi tong so phan tu cua trang : pageSize
+         if(pagination && pagination.pageSize){
+            if(+pagination.pageSize != +pageSize){ // dau + la de tu chuyen sang kieu du lieu so "5"=>5
+                setPageSize(+pagination.pageSize);
+            } 
+
+        }
+        console.log("check:  ",{pagination, filters, sorter, extra});
+    };
+    console.log("check pagesize :", pageSize);
 
     return (
         <>
@@ -109,6 +125,15 @@ const UserTable = (props) => {
                 columns={columns}
                 dataSource={dataUsers}
                 rowKey={"_id"}
+                pagination={
+                    {
+                    current: current,
+                    pageSize: pageSize,
+                    showSizeChanger: true,
+                    total: total,
+                    showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
+                    } }
+                onChange={onChange}    
             />
             <UpdateUserModal
                 isModalUpdateOpen={isModalUpdateOpen}
