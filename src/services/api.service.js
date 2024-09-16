@@ -54,6 +54,17 @@ const updateAvatarUserAPI = (avatar, _id, fullName, phone) => {
     }
     return axios.put(URL_BACKEND, data);
 }
+
+const registerUserAPI = (fullName, email, password, phone) => {
+    const URL_BACKEND = "/api/v1/user/register";
+    const data = {
+        fullName: fullName,  // trước dấu 2 chấm là tên key, sau là giá trị từ react
+        email: email,
+        password: password,
+        phone: phone,
+    }
+    return axios.post(URL_BACKEND, data);
+}
 export {
-    createUserAPI, updateUserAPI, fetchUserDataAPI, deleteUserAPI, handleUploadFile, updateAvatarUserAPI
+    createUserAPI, updateUserAPI, fetchUserDataAPI, deleteUserAPI, handleUploadFile, updateAvatarUserAPI, registerUserAPI
 }
