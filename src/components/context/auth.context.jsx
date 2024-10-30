@@ -21,7 +21,8 @@ export const AuthWrapper = (props) => {
     return (
         // truyen bien obj tuong tu props
         <AuthContext.Provider value={{ user, setUser }}>
-            {props.children}
+            {/* truyen gi vao day cung dc, truyen dong */}
+            {props.children} 
         </AuthContext.Provider>
     )
 }

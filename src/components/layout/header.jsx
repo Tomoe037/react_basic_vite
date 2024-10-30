@@ -1,5 +1,5 @@
 import { Link} from 'react-router-dom';
-import { HomeOutlined, UsergroupAddOutlined ,SettingOutlined, BookOutlined } from '@ant-design/icons';
+import { HomeOutlined, UsergroupAddOutlined ,SettingOutlined, BookOutlined , LoadingOutlined, AliwangwangOutlined, LoginOutlined} from '@ant-design/icons';
 import { Menu } from 'antd';
 import { Children, useState, useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
@@ -32,21 +32,25 @@ const Header = () => {
             key: 'books',
             icon: <BookOutlined />,            
         },
-        {
-            label:'Cài đặt',
+        //cau dieu kien "Conditionally add object to an array while being declared"
+        //neu khong co nguoi dung thi hien dang nhap va nguoc lai
+        ...(!user.id ? [{
+            label: <Link to={"/login"} >Dang nhap</Link>,
+            key: 'login',
+            icon: <LoginOutlined />,   
+        }] : []),
+
+        ...(user.id ? [{
+            label:`Welcome ${user.fullName}`,
             key: 'setting',
-            icon: <SettingOutlined />,     
-            Children: [
-                {
-                    label: <Link to={"/login"} >Đăng nhập</Link>,
-                    key: 'login',        
-                },
+            icon: <AliwangwangOutlined />,     
+            children: [
                 {
                     label: 'Đăng xuất',
                     key: 'logout',
                 },
-            ]      
-        },
+            ]     
+        }] : []),
     ];
     return (
         <Menu
