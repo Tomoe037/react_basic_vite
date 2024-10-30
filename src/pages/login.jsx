@@ -2,20 +2,26 @@ import { Button, Row, Col, Form, Input, Divider, message, notification, } from '
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from "react-router-dom";
 import { loginAPI } from '../services/api.service';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../components/context/auth.context';
 const LoginPage = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const {setUser} = useContext(AuthContext);
 
     const onFinish = async (values) => {
         setLoading(true);
         console.log(">>> check values:  ", values);
         const res = await loginAPI(values.email, values.password);
-        if(res.data){
-            message.success("Dang nhap thanh cong")
-        }else{
+        if (res.data) {
+            message.success("Dang nhap thanh cong");
+            localStorage.setItem("access_token", res.data.access_token);
+            setUser(res.data.user)// cap nhat thong tin nguoi dung
+            navigate("/");                              
+        } else {
             notification.error({
-                message:"dang nhap that bai",
+                message: "dang nhap that bai",
                 description: JSON.stringify(res.message)
             }
             )
@@ -75,16 +81,16 @@ const LoginPage = () => {
                                     justifyContent: "space-between",
                                     alignItems: "center"
                                 }}>
-                                    <Button 
-                                    loading={loading}
-                                    type="primary" onClick={() => form.submit()}>Login</Button>
+                                    <Button
+                                        loading={loading}
+                                        type="primary" onClick={() => form.submit()}>Login</Button>
 
                                     <Link to={"/"}>Go to homepage <ArrowRightOutlined /></Link>
                                 </div>
                             </Form.Item>
                         </Form>
                         <Divider></Divider>
-                            <div style={{textAlign:"center"}}> Chưa có tài khoản?<Link to={"/register"}>Đăng kí tại đây</Link></div>
+                        <div style={{ textAlign: "center" }}> Chưa có tài khoản?<Link to={"/register"}>Đăng kí tại đây</Link></div>
                     </fieldset>
                 </Col>
             </Row>
