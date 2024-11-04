@@ -19,13 +19,13 @@ const DetailUserDrawer = (props) => {
             setPreview(URL.createObjectURL(file))
         }
     }
-    console.log("check", preview)
+    // console.log("check", preview)
 
     const handleUpdateUserAvatar = async () => {
         //step 1: upload file
-        console.log("check file : ", selectedFile);
+        // console.log("check file : ", selectedFile);
         const resUpload = await handleUploadFile(selectedFile, "avatar") // avtar laf key trong be
-        console.log("check resUpload ", resUpload);
+        // console.log("check resUpload ", resUpload);
         if (resUpload.data) {
             const newAvatar = resUpload.data.fileUploaded;
             // step 2 update user

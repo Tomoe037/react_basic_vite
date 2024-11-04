@@ -9,10 +9,10 @@ const Header = () => {
 
     // lay data 
     const {user} = useContext(AuthContext);
-    console.log("check data ", user);
+    // console.log("check data ", user);
 
     const onClick = (e) => {
-      console.log('click ', e);
+    //   console.log('click ', e);
       setCurrent(e.key);
     };
 

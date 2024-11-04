@@ -115,9 +115,9 @@ const UserTable = (props) => {
             } 
 
         }
-        console.log("check:  ",{pagination, filters, sorter, extra});
+        // console.log("check:  ",{pagination, filters, sorter, extra});
     };
-    console.log("check pagesize :", pageSize);
+    // console.log("check pagesize :", pageSize);
 
     return (
         <>

@@ -27,7 +27,7 @@ const TodoApp = () => {
     const deleteTodo = (id) => {
         const newTodo = todoList.filter((item) => { return (item.id !== id) });
         setTodoList(newTodo);
-        console.log(newTodo);
+        // console.log(newTodo);
 
     }
     return (

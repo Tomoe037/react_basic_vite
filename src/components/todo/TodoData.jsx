@@ -3,7 +3,7 @@ const TodoData = (props) => {
     // const age = props.age;
     // const data = props.data;
     const { todoList, deleteTodo } = props; //viết tắt của thằng trên
-    console.log(props)
+    // console.log(props)
     const handleDelClick = (id) => {
         deleteTodo(id);
         

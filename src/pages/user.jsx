@@ -11,7 +11,7 @@ const UserPage = () => {
     //emty array => run once
     // not emty => next value != prev value
     useEffect(() => {
-        console.log("check load 111");
+        // console.log("check load 111");
         loadUser();
     }, [current,pageSize]) ; // [] + ddieu kien current
 
