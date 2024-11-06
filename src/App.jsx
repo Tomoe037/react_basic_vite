@@ -35,7 +35,7 @@ const App = () => {
       setUser(res.data.user)
       console.log("check user data", res.data)
     }
-    setIsAppLoading(true);
+    setIsAppLoading(false);
   };
 
   return (
