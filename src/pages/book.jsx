@@ -10,6 +10,7 @@ const BookPage = () => {
                 fontSize: "30px"
             }}>Book Page</div>
             <BookTable></BookTable>
+            
         </>
 
     )

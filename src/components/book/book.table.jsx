@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Table, Drawer } from "antd";
 import { fetchAllBookDataAPI } from "../../services/api.service";
 
 
@@ -11,6 +11,8 @@ const BookTable = () => {
     const [currentBook, setCurrentBook] = useState(1);
     const [pageSizeBook, setPageSizeBook] = useState(2);
     const [totalBook, setTotalBook] = useState(0);
+    const [openDetailBook, setOpenDetailBook] = useState(false);
+    const [dataDetailBook, setDataDetailBook] = useState([]);
 
 
     //empty array => chay 1 lan
@@ -35,6 +37,14 @@ const BookTable = () => {
             title: 'Id',
             dataIndex: '_id',
             key: 'id',
+            render: (_, record) => {
+                return (<a onClick={
+                    () => {
+                        setDataDetailBook(record);
+                        setOpenDetailBook(true)
+                    }
+                }>{record._id}</a>)
+            },
         },
         {
             title: 'Ảnh',
@@ -104,6 +114,9 @@ const BookTable = () => {
         }
 
     };
+    // console.log("check dataDetailBook", dataDetailBook)
+
+
 
 
 
@@ -123,6 +136,47 @@ const BookTable = () => {
                     }}
                 onChange={onChange}
             />
+            <Drawer title="Basic Drawer"
+                onClose={() => {
+                    setDataDetailBook(null)
+                    setOpenDetailBook(false)
+                }}
+                open={openDetailBook}>
+
+                {dataDetailBook ?
+                    <>
+                        <p>Id : {dataDetailBook._id}</p>
+                        <p>Tiêu đề : {dataDetailBook.mainText}</p>
+                        <p>Tác giả : {dataDetailBook.author}</p>
+                        <p>Giá : {dataDetailBook.price}</p>
+                        <p>Số lượng : {dataDetailBook.quantity}</p>
+                        <p>Lượng bán : {dataDetailBook.sold}</p>
+                        <p>Loại sách : {dataDetailBook.category}</p>
+                        <div
+                            style={{
+                                width: "150px",
+                                height: "150px",
+                                border: "1px solid #ccc",
+                                margin: "10px 0",
+                            }}
+                        >
+                            <img
+
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "contain",
+                                }}
+                                src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${dataDetailBook.thumbnail}`}
+                            ></img>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <div>not data</div>
+                    </>
+                }
+            </Drawer>
         </>
     )
 
