@@ -84,7 +84,21 @@ const logoutAPI = () => {
     const URL_BACKEND = "/api/v1/auth/logout";
     return axios.post(URL_BACKEND);
 }
+
+//1:tao API lay du lieu book
+/*phân trang tĩnh
+// const fetchAllBookDataAPI = () =>{
+//     const URL_BACKEND = "api/v1/book?current=1&pageSize=10";
+//     return axios.get(URL_BACKEND);
+// } */
+
+//phân trang động
+const fetchAllBookDataAPI = (current, pageSize) =>{
+    const URL_BACKEND = `api/v1/book?current=${current}&pageSize=${pageSize}`;
+    return axios.get(URL_BACKEND);
+}
 export {
     createUserAPI, updateUserAPI, fetchUserDataAPI, deleteUserAPI, handleUploadFile, updateAvatarUserAPI, registerUserAPI,
-    loginAPI, getAccountAPI, logoutAPI
+    loginAPI, getAccountAPI, logoutAPI,
+    fetchAllBookDataAPI
 }

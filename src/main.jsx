@@ -48,7 +48,9 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
+  /*  chế độ dev giúp dev phát hiện bug, cụ thể là khi bật chế độ này lên thì react sẽ chạy web 2  lần để phát hiện bug nếu có
+  */   
+  // <React.StrictMode>   
   <AuthWrapper>
     <RouterProvider router={router} />
   </AuthWrapper>

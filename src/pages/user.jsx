@@ -28,11 +28,10 @@ const UserPage = () => {
         
     }
     //lift up state
-    return (<div>User Page
+    return (
+    <div>User Page
         <div style={{padding:"0 20px"}}> 
-            <UserForm 
-            loadUser= {loadUser}
-            />
+            <UserForm loadUser= {loadUser} />
             <UserTable 
             dataUsers = {dataUsers}
             loadUser = {loadUser}
